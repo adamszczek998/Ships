@@ -2,6 +2,8 @@
 #include "Point.h"
 #include <iostream>
 
+
+
 class Circle {
 private:
 	Point srodek;
@@ -26,11 +28,13 @@ public:
 
 	double  area() const { return 2 * 3.14*promien*promien; }
 	double permimeter() const { return 2 * 3.14*promien; }
-	void print() {
+	void print() const {
 		std::cout << "x: " << srodek.x << " y: " << srodek.y << std::endl;
 		std::cout << "Promien: " << promien;
 	}
 };
 
+enum polozenie { rozlaczne_zewnetrznie, styczne_zew, przecinajace_sie, styczne_wew, rozlaczne_wew, wspolsrodkowe };
 
+polozenie circlesLocation (const Circle& Aa, const Circle& Bb);
 
