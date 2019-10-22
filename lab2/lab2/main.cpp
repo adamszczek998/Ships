@@ -1,6 +1,7 @@
 #include <iostream>
 #include <conio.h>
 #include "BattlefieldSimulation.h"
+#include "Vector2D.h"
 #include <ctime>
 #include <cstdlib>
 using namespace std;
