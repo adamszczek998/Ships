@@ -35,13 +35,13 @@ public:
 
 };
 
-class ClusterBomb {
+class ClusterBomb : public Projectile {
 	ClusterBomb(const Vector2D& pozycjaPocisku, const Vector2D& kierunekPocisku) : pozycjaPocisku(pozycjaPocisku), kierunekPocisku(kierunekPocisku) {}
 };
-class ShotgunShell {
+class ShotgunShell : public Projectile {
 	ShotgunShell(const Vector2D& pozycjaPocisku, const Vector2D& kierunekPocisku) : pozycjaPocisku(pozycjaPocisku), kierunekPocisku(kierunekPocisku) {}
 };
-class Cluster {
+class Cluster : public Projectile {
 	Cluster(const Vector2D& pozycjaPocisku, const Vector2D& kierunekPocisku) : pozycjaPocisku(pozycjaPocisku), kierunekPocisku(kierunekPocisku) {}
 };
 #endif
