@@ -23,7 +23,7 @@
     <ClInclude Include="statek.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="ksztalt.h">
+    <ClInclude Include="plansza.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
   </ItemGroup>

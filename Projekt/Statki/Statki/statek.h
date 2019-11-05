@@ -9,28 +9,29 @@ struct Punkt {
 	short x;
 };
 
+enum Kierunek { polnoc, wschod, poludnie, zachod };
 class Statek {
 	private:
 		short punktyZycia;
 		short liczbaDostepnychStatkowDoRozstawienia;
 		short dlugoscStatku;
-		Punkt pozycjaRufy;
-		enum Kierunek { polnoc, wschod, poludnie, zachod };
-		Kierunek kierunek;
+		
 	public:
+		Kierunek kierunek;
+		Punkt pozycjaRufy;
 		//dekrementuje HP
 		void trafienie() {
 			punktyZycia--;
 		}
-		//dekrementuje pozosta³¹ liczbê statków do rozstawienia
+		//dekrementuje pozostaï¿½ï¿½ liczbï¿½ statkï¿½w do rozstawienia
 		void rozstawiony() {
 			liczbaDostepnychStatkowDoRozstawienia--;
 		}
-		//ustawia d³ugoœæ statku
+		//ustawia dï¿½ugoï¿½ï¿½ statku
 		Statek(short dlugosc) {
 			dlugoscStatku = dlugosc;
 		}
-		//ustawia pozycjê rufy na planszy
+		//ustawia pozycjï¿½ rufy na planszy
 		void setPozycjaRufy(Punkt pozycja) {
 			pozycjaRufy = pozycja;
 		}

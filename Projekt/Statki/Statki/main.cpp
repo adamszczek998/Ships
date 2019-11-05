@@ -1,13 +1,13 @@
 #include <SFML/Graphics.hpp>
-#include "ksztalt.h"
+#include "plansza.h"
 int main()
 {
 	const int windowSizeX = 1620;
 	const int windowSizeY = 900;
 	sf::RenderWindow window(sf::VideoMode(windowSizeX, windowSizeY), "SFML works!");//stworzenie okna 200x200
 /*
-	sf::RectangleShape planszaRozstawienia(sf::Vector2f(800, 800));//stworzenie obiektu kszta³tu
-	sf::RectangleShape planszaStrzalu(sf::Vector2f(800, 800));//stworzenie obiektu kszta³tu
+	sf::RectangleShape planszaRozstawienia(sf::Vector2f(800, 800));//stworzenie obiektu ksztaï¿½tu
+	sf::RectangleShape planszaStrzalu(sf::Vector2f(800, 800));//stworzenie obiektu ksztaï¿½tu
 	planszaRozstawienia.setPosition(0.f, 100.f);
 	planszaStrzalu.setPosition(820.f, 100.f);
 	sf::Color kolorPlanszaRozstawienia(15,101,176);
@@ -18,23 +18,29 @@ int main()
 	Plansza planszaRozstawienia(sf::Vector2f(800.f, 800.f), sf::Vector2f(0.f, 100.f), sf::Color(15, 101, 176));
 	Plansza planszaStrzalu(sf::Vector2f(800.f, 800.f), sf::Vector2f(820.f, 100.f), sf::Color(13, 73, 127));
 
-
-
-
+	//Testowe wypisywanie planszy i ustawianie okrÄ™tu
+	planszaRozstawienia.wypiszPlansze();
+	Punkt punkt;
+	punkt.x = 1;
+	punkt.y = 'E';
+	planszaRozstawienia.ustawStatek(3, punkt, zachod);
+	std::cout << "\n\n";
+	planszaRozstawienia.wypiszPlansze();
+	//===============================================
 
 	while (window.isOpen())//glowna petla 
 	{
 		sf::Event event;
-		while (window.pollEvent(event))//³apie wszystkie eventy
+		while (window.pollEvent(event))//ï¿½apie wszystkie eventy
 		{
-			if (event.type == sf::Event::Closed)//wy³apuje czy event to klikniêcie krzy¿yka
+			if (event.type == sf::Event::Closed)//wyï¿½apuje czy event to klikniï¿½cie krzyï¿½yka
 				window.close();//zamyka okno
 		}
 
-		window.clear();//nie rozmazuje siê jak na XP
-		window.draw(planszaRozstawienia);//render kola (kszta³tu)
+		window.clear();//nie rozmazuje siï¿½ jak na XP
+		window.draw(planszaRozstawienia);//render kola (ksztaï¿½tu)
 		window.draw(planszaStrzalu);
-		window.display();//wyœwietla okno
+		window.display();//wyï¿½wietla okno
 	}
 
 	return 0;
