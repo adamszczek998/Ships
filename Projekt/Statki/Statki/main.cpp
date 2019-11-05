@@ -21,9 +21,9 @@ int main()
 	//Testowe wypisywanie planszy i ustawianie okrętu
 	planszaRozstawienia.wypiszPlansze();
 	Punkt punkt;
-	punkt.x = 1;
+	punkt.x = 5;
 	punkt.y = 'E';
-	planszaRozstawienia.ustawStatek(3, punkt, zachod);
+	planszaRozstawienia.ustawStatek(3, punkt, polnoc);
 	std::cout << "\n\n";
 	planszaRozstawienia.wypiszPlansze();
 	//===============================================
