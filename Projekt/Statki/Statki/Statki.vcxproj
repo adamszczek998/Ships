@@ -142,8 +142,13 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Gracz.h" />
+    <ClInclude Include="GraczLudzki.h" />
     <ClInclude Include="plansza.h" />
     <ClInclude Include="statek.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="todo.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

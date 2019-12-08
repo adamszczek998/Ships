@@ -1,0 +1,14 @@
+﻿Odporność na błędy (wyjątki)
+Komentarze opisujące działanie poszczególnych funkcji, opis znaczenia wszystkich zmiennych.
+Podział na pliki *.h i *.cpp
+Polimorfizm
+
+13. Program powinien wykorzystywać co najmniej trzy inne elementy poznane w trakcie wykładu/laboratorium:
+ wyjątki,
+ kontenery i algorytmy STL,
+ szablony,
+ przeciążone operatory,
+ inteligentne wskaźniki,
+ wyrażenia lambda,
+ strumienie,
+ semantyka przeniesienia.
