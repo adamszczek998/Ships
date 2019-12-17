@@ -58,6 +58,7 @@ public:
 					if (sf::Mouse::getPosition(*_window).x <= 800) {
 						Punkt pozycjaRufyRozstawienie = { sf::Mouse::getPosition(*_window).x / 80, char(sf::Mouse::getPosition(*_window).y / 80 + 'A') };
 						std::cout << pozycjaRufyRozstawienie.x << " " << pozycjaRufyRozstawienie.y << std::endl;
+						std::cout << sf::Mouse::getPosition(*_window).x << "\t" << sf::Mouse::getPosition(*_window).y << std::endl;
 					}
 					else if (sf::Mouse::getPosition(*_window).x >= 820) {
 						Punkt pozycjaStrzal = { (sf::Mouse::getPosition(*_window).x - 820) / 80, char(sf::Mouse::getPosition(*_window).y / 80 + 'A') };
