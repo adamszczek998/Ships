@@ -8,19 +8,21 @@ int main(){
 	const int windowSizeY = 900;
 	sf::RenderWindow window(sf::VideoMode(windowSizeX, windowSizeY), "Statki");
 
-	//Testowe wypisywanie planszy i ustawianie okrętu
-	/*
-	planszaRozstawienia.wypiszPlansze();
+
+	
+	sf::Event event;
+	Gracz* gracz1 = new GraczLudzki(&event, &window);
+
+	//Testowe wypisywanie planszy i ustawianie okrętu/ nie działa
+/*
+	planszaGraczaLudzkiego.wypiszPlansze();
 	Punkt punkt;
 	punkt.x = 5;
 	punkt.y = 'E';
-	planszaRozstawienia.ustawStatek(3, punkt, polnoc);
+	planszaGraczaLudzkiego.ustawStatek(3, punkt, polnoc);
 	std::cout << "\n\n";
-	planszaRozstawienia.wypiszPlansze();*/
-	//===============================================
-
-	sf::Event event;
-	Gracz* gracz1 = new GraczLudzki(&event, &window);
+	planszaGraczaLudzkiego.wypiszPlansze(); 
+		//*///===============================================
 
 	while (window.isOpen()) {//glowna petla 
 		while (window.pollEvent(event)) {//lapie wszystkie eventy

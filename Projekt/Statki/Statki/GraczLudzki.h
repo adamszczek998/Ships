@@ -6,8 +6,8 @@ class GraczLudzki : public Gracz {
 	const sf::Window* _window;
 	sf::RectangleShape kwadratKursora;
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
-		target.draw(*planszaRozstawienia);
-		target.draw(*planszaStrzalu);
+		target.draw(*planszaGraczaLudzkiego);
+		target.draw(*planszaGraczaKomputerowego);
 		target.draw(kwadratKursora);
 		target.draw(aktualnyStatek);
 	}
@@ -15,9 +15,9 @@ public:
 	GraczLudzki(const sf::Event* event, const sf::Window* window) {
 		_event = event;		
 		_window = window;
-		planszaRozstawienia = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(0.f, 0.f), sf::Color(15, 101, 176));
-		planszaStrzalu = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(820.f, 0.f), sf::Color(13, 73, 127));
-		Statek statek(3,planszaRozstawienia);
+		planszaGraczaLudzkiego = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(0.f, 0.f), sf::Color(15, 101, 176));
+		planszaGraczaKomputerowego = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(820.f, 0.f), sf::Color(13, 73, 127));
+		Statek statek(3,planszaGraczaLudzkiego);
 		statki.push_back(statek);
 		aktualnyStatek = statki[0];
 
@@ -25,12 +25,12 @@ public:
 		kwadratKursora.setPosition({ 0, 0 });
 		kwadratKursora.setFillColor(sf::Color::White);
 	}
-	~GraczLudzki()
-	{
-		delete planszaRozstawienia;
-		delete planszaStrzalu;
+	~GraczLudzki(){
+		delete planszaGraczaLudzkiego;
+		delete planszaGraczaKomputerowego;
 	}
 	
+	//Obs³uga ruchu myszy, zmiany kierunku, wybrania pola
 	virtual  void DoTurn() override {
 		if (_event->type == sf::Event::MouseMoved){//ruch myszy==========================================================================================================
 			if (sf::Mouse::getPosition(*_window).y < 800) {
