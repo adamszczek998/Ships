@@ -47,36 +47,36 @@ class Statek : public sf::Drawable {
 			dziob.setSize({ 80, 80 });
 			dziob.setFillColor(sf::Color::Green);
 
-			setPozycjaRufy({ 4, 'E' });
+			setPozycjaRufy({ 4, 'E'}, 0);
 		}
 //SETERY==============================================================================================================================================================	
 
 		//ustawia pozycje rufy na planszy
-		void setPozycjaRufy(Punkt pozycja) {
+		void setPozycjaRufy(Punkt pozycja, bool gracz) {
 			pozycjaRufy = pozycja;
-			//if (_planszaGraczaLudzkiego->sprawdzCzyWolne(dlugoscStatku, pozycjaRufy, kierunek))
-			renderStatku(dlugoscStatku, kierunek);
+			if (gracz == 0) renderStatku(dlugoscStatku, kierunek);
 		}
 
 		//ustawia kierunek statku
-		void setKierunek(Kierunek podanyKierunek) {
+		void setKierunek(Kierunek podanyKierunek, bool gracz) {
 			kierunek = podanyKierunek;			
-			if (_planszaGraczaLudzkiego->sprawdzCzyWolne(dlugoscStatku, pozycjaRufy, kierunek)) renderStatku(dlugoscStatku, kierunek);
+			if (gracz == 0) if (_planszaGraczaLudzkiego->sprawdzCzyWolne(dlugoscStatku, pozycjaRufy, kierunek, 0)) renderStatku(dlugoscStatku, kierunek);
 		}
 
 
 //GETERY==============================================================================================================================================================	
 
 		//pobiera d³ugoœæ statku
-		int getDlugoscStatku()
-		{
+		int getDlugoscStatku() const {
 			return dlugoscStatku;
 		}
 		//pobiera kierunek statku
 		Kierunek getKierunek() const {
 			return kierunek;
 		}
-	
+		Punkt getPozycja() const {
+			return pozycjaRufy;
+		}
 
 //METODY==============================================================================================================================================================
 

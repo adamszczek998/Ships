@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "plansza.h"
 #include "GraczLudzki.h"
+#include "GraczKomputerowy.h"
 
 int main(){
 
@@ -9,15 +10,24 @@ int main(){
 	sf::RenderWindow window(sf::VideoMode(windowSizeX, windowSizeY), "Statki");
 
 	sf::Event event;
-//	Gracz* gracz1 = new GraczLudzki(&event, &window);
+	int indexAktualnegoGracza = 1;
+	int staryIndex = 1;
 	Gracz* gracze[2];
-	gracze[0] = new GraczLudzki(&event, &window);
-	Gracz* aktualnyGracz = gracze[0];
-	//gracze[1] =
+	gracze[0] = new GraczLudzki(&event, &window, &indexAktualnegoGracza);
+	gracze[1] = new GraczKomputerowy(&event, &window, &indexAktualnegoGracza);
+	Gracz* aktualnyGracz = gracze[indexAktualnegoGracza];
+	
 	
 	while (window.isOpen()) {//glowna petla 
 		while (window.pollEvent(event)) {//lapie wszystkie eventy
-			aktualnyGracz->DoTurn();		
+			aktualnyGracz->DoTurn();
+			//std::cout << "Stary: " << staryIndex << "\n";
+			//std::cout << "Aktualny: " << indexAktualnegoGracza << "\n";
+			if (staryIndex != indexAktualnegoGracza) {
+				staryIndex = indexAktualnegoGracza;
+				aktualnyGracz = gracze[indexAktualnegoGracza];
+				std::cout << "q";
+			}
 			if (event.type == sf::Event::Closed)//wylapuje czy event to klikniecie krzyzyka
 				window.close();//zamyka okno
 		}

@@ -143,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gracz.h" />
+    <ClInclude Include="GraczKomputerowy.h" />
     <ClInclude Include="GraczLudzki.h" />
     <ClInclude Include="plansza.h" />
     <ClInclude Include="statek.h" />
