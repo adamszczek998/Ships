@@ -16,4 +16,5 @@ protected:
 
 public:
 	virtual void DoTurn() = 0;
+
 };

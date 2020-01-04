@@ -28,8 +28,8 @@ public:
 		_indexAktualnegoGracza = indexAktualnegoGracza;
 		_event = event;		
 		_window = window;
-		planszaGraczaLudzkiego = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(0.f, 0.f), sf::Color(15, 101, 176));
-		planszaGraczaKomputerowego = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(820.f, 0.f), sf::Color(13, 73, 127));
+		//planszaGraczaLudzkiego = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(0.f, 0.f), sf::Color(15, 101, 176));
+		//planszaGraczaKomputerowego = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(820.f, 0.f), sf::Color(13, 73, 127));
 
 		Statek statek2(2, planszaGraczaLudzkiego);
 		Statek statek3(3, planszaGraczaLudzkiego);

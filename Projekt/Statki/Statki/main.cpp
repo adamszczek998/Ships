@@ -16,10 +16,11 @@ int main(){
 	gracze[0] = new GraczLudzki(&event, &window, &indexAktualnegoGracza);
 	gracze[1] = new GraczKomputerowy(&event, &window, &indexAktualnegoGracza);
 	Gracz* aktualnyGracz = gracze[indexAktualnegoGracza];
-	
+
 	
 	while (window.isOpen()) {//glowna petla 
 		while (window.pollEvent(event)) {//lapie wszystkie eventy
+
 			aktualnyGracz->DoTurn();
 			//std::cout << "Stary: " << staryIndex << "\n";
 			//std::cout << "Aktualny: " << indexAktualnegoGracza << "\n";

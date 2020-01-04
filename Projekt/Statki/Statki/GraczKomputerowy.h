@@ -3,7 +3,7 @@
 
 
 class GraczKomputerowy : public Gracz {
-	friend class GraczLudzki;
+	friend class GraczLudzki;//
 	const sf::Event* _event;
 	const sf::Window* _window;
 	sf::RectangleShape kwadratKursora;
@@ -28,8 +28,8 @@ public:
 		_event = event;//
 		_window = window;//
 
-		//planszaGraczaLudzkiego = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(0.f, 0.f), sf::Color(15, 101, 176));
-		//planszaGraczaKomputerowego = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(820.f, 0.f), sf::Color(13, 73, 127));
+		planszaGraczaLudzkiego = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(0.f, 0.f), sf::Color(15, 101, 176));
+		planszaGraczaKomputerowego = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(820.f, 0.f), sf::Color(13, 73, 127));
 
 		Statek statek2(2, planszaGraczaLudzkiego);
 		Statek statek3(3, planszaGraczaLudzkiego);
