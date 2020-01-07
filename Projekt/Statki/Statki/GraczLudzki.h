@@ -55,7 +55,7 @@ public:
 		delete planszaGraczaKomputerowego;
 	}
 	
-	//Obs³uga faz gry
+	//Obsï¿½uga faz gry
 	virtual  void DoTurn() override { 
 		if (fazaGry == STRZELANIE) FazaStrzelania(); 
 		else if (fazaGry == ROZSTAWIENIE) FazaRozstawienia();
@@ -95,7 +95,7 @@ public:
 						std::cout << pozycjaRufyRozstawienie.x << " " << pozycjaRufyRozstawienie.y << std::endl;
 						std::cout << sf::Mouse::getPosition(*_window).x << "\t" << sf::Mouse::getPosition(*_window).y << std::endl;
 						if (planszaGraczaLudzkiego->sprawdzCzyWolne(statki[indeksAktualnegoStatku].getDlugoscStatku(), pozycjaRufyRozstawienie, statki[indeksAktualnegoStatku].getKierunek(), 0)){
-							//przeniesienie aktualnego statku do rozstawionych statków
+							//przeniesienie aktualnego statku do rozstawionych statkï¿½w
 							rozstawioneStatki.push_back(statki[indeksAktualnegoStatku]);
 							planszaGraczaLudzkiego->ustawStatek(statki[indeksAktualnegoStatku].getDlugoscStatku(), pozycjaRufyRozstawienie, statki[indeksAktualnegoStatku].getKierunek(), 0);
 							//TODO zmiana koloru rozstawionego statku

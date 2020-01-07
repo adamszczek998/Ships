@@ -19,7 +19,6 @@ class GraczKomputerowy : public Gracz {
 		//}
 		//target.draw(kwadratKursora);
 		//target.draw(statki[indeksAktualnegoStatku]);
-	
 	}
 public:
 
@@ -41,7 +40,6 @@ public:
 		statkiKomputera.push_back(statek5);
 		liczbaStatkowDoRozstawienia = statkiKomputera.size();
 		indeksAktualnegoStatku = 0;
-		
 		
 	}
 
@@ -70,7 +68,7 @@ public:
 		while (indeksAktualnegoStatku < statkiKomputera.size()-1) {
 			std::cout << indeksAktualnegoStatku << std::endl;
 			if (planszaGraczaLudzkiego->sprawdzCzyWolne(statkiKomputera[indeksAktualnegoStatku].getDlugoscStatku(), statkiKomputera[indeksAktualnegoStatku].getPozycja(), statkiKomputera[indeksAktualnegoStatku].getKierunek(), 1)) {
-				//przeniesienie aktualnego statku do rozstawionych statków
+				//przeniesienie aktualnego statku do rozstawionych statkï¿½w
 				rozstawioneStatkiKomputera.push_back(statkiKomputera[indeksAktualnegoStatku]);
 				planszaGraczaLudzkiego->ustawStatek(statkiKomputera[indeksAktualnegoStatku].getDlugoscStatku(), statkiKomputera[indeksAktualnegoStatku].getPozycja(), statkiKomputera[indeksAktualnegoStatku].getKierunek(), 1);
 

@@ -17,7 +17,7 @@ class Statek : public sf::Drawable {
 		sf::RectangleShape kadlub[3];
 		sf::RectangleShape dziob;
 
-		//render elementów statku
+		//render elementï¿½w statku
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
 			target.draw(rufa);
 			for (int i = 0; i < dlugoscStatku-2; ++i) {//@
@@ -66,7 +66,7 @@ class Statek : public sf::Drawable {
 
 //GETERY==============================================================================================================================================================	
 
-		//pobiera d³ugoœæ statku
+		//pobiera dï¿½ugoï¿½ï¿½ statku
 		int getDlugoscStatku() const {
 			return dlugoscStatku;
 		}
@@ -80,7 +80,7 @@ class Statek : public sf::Drawable {
 
 //METODY==============================================================================================================================================================
 
-		//przelicza pozycjê statku na px pod render
+		//przelicza pozycjï¿½ statku na px pod render
 		void renderStatku(short dlugoscStatku, Kierunek kierunek) {
 			short i;
 			if (kierunek == polnoc) {
