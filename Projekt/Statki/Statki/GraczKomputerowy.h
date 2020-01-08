@@ -6,29 +6,33 @@ class GraczKomputerowy : public Gracz {
 	friend class GraczLudzki;//
 	const sf::Event* _event;
 	const sf::Window* _window;
+	Plansza* _planszaGraczaLudzkiego;//
+	Plansza* _planszaGraczaKomputerowego;//
 	sf::RectangleShape kwadratKursora;
 	FazaGry fazaGry;
 	bool finishedTurn = false;
 	int liczbaStatkowDoRozstawienia;
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
 		
-		target.draw(*planszaGraczaLudzkiego);
-		target.draw(*planszaGraczaKomputerowego);
-		//for (int i = 0; i < rozstawioneStatki.size(); i++) {
-		//	target.draw(rozstawioneStatki[i]);
-		//}
-		//target.draw(kwadratKursora);
+		target.draw(*_planszaGraczaLudzkiego);//
+		target.draw(*_planszaGraczaKomputerowego);//
+		for (int i = 0; i < rozstawioneStatki.size(); i++) {
+			target.draw(rozstawioneStatki[i]);
+		}
+		target.draw(kwadratKursora);
 		//target.draw(statki[indeksAktualnegoStatku]);
 	}
 public:
 
-	GraczKomputerowy(const sf::Event* event, const sf::Window* window, int* indexAktualnegoGracza) {
+	GraczKomputerowy(const sf::Event* event, const sf::Window* window, int* indexAktualnegoGracza, Plansza* planszaGraczaLudzkiego, Plansza* planszaGraczaKomputerowego) {
 		_indexAktualnegoGracza = indexAktualnegoGracza;
 		_event = event;//
 		_window = window;//
+		_planszaGraczaLudzkiego = planszaGraczaLudzkiego;
+		_planszaGraczaKomputerowego = planszaGraczaKomputerowego;
 
-		planszaGraczaLudzkiego = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(0.f, 0.f), sf::Color(15, 101, 176));
-		planszaGraczaKomputerowego = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(820.f, 0.f), sf::Color(13, 73, 127));
+		//planszaGraczaLudzkiego = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(0.f, 0.f), sf::Color(15, 101, 176));
+		//planszaGraczaKomputerowego = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(820.f, 0.f), sf::Color(13, 73, 127));
 
 		Statek statek2(2, planszaGraczaLudzkiego);
 		Statek statek3(3, planszaGraczaLudzkiego);
@@ -65,15 +69,15 @@ public:
 		statkiKomputera[3].setPozycjaRufy({ 7, 'H' }, 1);
 		//std::cout << "2";
 		indeksAktualnegoStatku = 0;
-		while (indeksAktualnegoStatku < statkiKomputera.size()-1) {
+		while (indeksAktualnegoStatku < statkiKomputera.size()) {
 			std::cout << indeksAktualnegoStatku << std::endl;
-			if (planszaGraczaLudzkiego->sprawdzCzyWolne(statkiKomputera[indeksAktualnegoStatku].getDlugoscStatku(), statkiKomputera[indeksAktualnegoStatku].getPozycja(), statkiKomputera[indeksAktualnegoStatku].getKierunek(), 1)) {
+			if (_planszaGraczaLudzkiego->sprawdzCzyWolne(statkiKomputera[indeksAktualnegoStatku].getDlugoscStatku(), statkiKomputera[indeksAktualnegoStatku].getPozycja(), statkiKomputera[indeksAktualnegoStatku].getKierunek(), 1)) {
 				//przeniesienie aktualnego statku do rozstawionych statk�w
 				rozstawioneStatkiKomputera.push_back(statkiKomputera[indeksAktualnegoStatku]);
-				planszaGraczaLudzkiego->ustawStatek(statkiKomputera[indeksAktualnegoStatku].getDlugoscStatku(), statkiKomputera[indeksAktualnegoStatku].getPozycja(), statkiKomputera[indeksAktualnegoStatku].getKierunek(), 1);
+				_planszaGraczaLudzkiego->ustawStatek(statkiKomputera[indeksAktualnegoStatku].getDlugoscStatku(), statkiKomputera[indeksAktualnegoStatku].getPozycja(), statkiKomputera[indeksAktualnegoStatku].getKierunek(), 1);
 
 				liczbaStatkowDoRozstawienia--;
-				if (liczbaStatkowDoRozstawienia > 0) {
+				if (liczbaStatkowDoRozstawienia >= 0) {
 					++indeksAktualnegoStatku;
 				}
 			}

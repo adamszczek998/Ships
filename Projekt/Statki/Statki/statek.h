@@ -34,18 +34,18 @@ class Statek : public sf::Drawable {
 		//ustawia parametry graficzne statku
 		Statek(short dlugosc, Plansza* planszaGraczaLudzkiego) : dlugoscStatku(dlugosc), punktyZycia(dlugosc), kierunek(Kierunek::polnoc), _planszaGraczaLudzkiego(planszaGraczaLudzkiego) {			
 			rufa.setSize({ 80, 80 });
-			rufa.setFillColor(sf::Color::Red);
+			rufa.setFillColor(sf::Color::White);
 
 			for (int i = 2; i < dlugoscStatku; ++i) {
 				sf::RectangleShape nowyKadlub;
 				nowyKadlub.setSize({ 80, 80 });
-				nowyKadlub.setFillColor(sf::Color::Yellow);
+				nowyKadlub.setFillColor(sf::Color::White);
 				//kadlub.push_back(nowyKadlub);@
 				kadlub[i - 2] = nowyKadlub;
 			}
 
 			dziob.setSize({ 80, 80 });
-			dziob.setFillColor(sf::Color::Green);
+			dziob.setFillColor(sf::Color::White);
 
 			setPozycjaRufy({ 4, 'E'}, 0);
 		}

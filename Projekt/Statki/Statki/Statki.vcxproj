@@ -146,7 +146,6 @@
     <ClInclude Include="GraczKomputerowy.h" />
     <ClInclude Include="GraczLudzki.h" />
     <ClInclude Include="plansza.h" />
-    <ClInclude Include="Render.h" />
     <ClInclude Include="statek.h" />
   </ItemGroup>
   <ItemGroup>

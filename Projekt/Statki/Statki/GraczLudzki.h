@@ -7,15 +7,16 @@ class GraczLudzki : public Gracz {
 	friend class GraczKomputerowy;
 	const sf::Event* _event;
 	const sf::Window* _window;
-	
+	Plansza* _planszaGraczaLudzkiego;//
+	Plansza* _planszaGraczaKomputerowego;//
 	sf::RectangleShape kwadratKursora;
 	FazaGry fazaGry;
 	bool finishedTurn = false;
 	int liczbaStatkowDoRozstawienia;
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
 		
-		//target.draw(*planszaGraczaLudzkiego);
-		//target.draw(*planszaGraczaKomputerowego);
+		target.draw(*_planszaGraczaLudzkiego);
+		target.draw(*_planszaGraczaKomputerowego);
 		for (int i = 0; i < rozstawioneStatki.size(); i++){
 			target.draw(rozstawioneStatki[i]);
 		}
@@ -24,10 +25,12 @@ class GraczLudzki : public Gracz {
 	}
 public:
 //KONSTRUKTORY=============================================================================================
-	GraczLudzki(const sf::Event* event, const sf::Window* window, int* indexAktualnegoGracza) {
+	GraczLudzki(const sf::Event* event, const sf::Window* window, int* indexAktualnegoGracza, Plansza* planszaGraczaLudzkiego, Plansza* planszaGraczaKomputerowego) {
 		_indexAktualnegoGracza = indexAktualnegoGracza;
 		_event = event;		
 		_window = window;
+		_planszaGraczaLudzkiego = planszaGraczaLudzkiego;
+		_planszaGraczaKomputerowego = planszaGraczaKomputerowego;
 		//planszaGraczaLudzkiego = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(0.f, 0.f), sf::Color(15, 101, 176));
 		//planszaGraczaKomputerowego = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(820.f, 0.f), sf::Color(13, 73, 127));
 
@@ -51,11 +54,11 @@ public:
 
 //DESTRUKTORY==============================================================================================
 	~GraczLudzki(){
-		delete planszaGraczaLudzkiego;
-		delete planszaGraczaKomputerowego;
+		//delete _planszaGraczaLudzkiego;
+		//delete _planszaGraczaKomputerowego;
 	}
 	
-	//Obs�uga faz gry
+	//Obsluga faz gry
 	virtual  void DoTurn() override { 
 		if (fazaGry == STRZELANIE) FazaStrzelania(); 
 		else if (fazaGry == ROZSTAWIENIE) FazaRozstawienia();
@@ -88,16 +91,16 @@ public:
 			}//==========================================================================================================================================================
 		}
 		else if (_event->type == sf::Event::MouseButtonPressed) {//klikniecie klawisza myszy============================================================================
-			if (_event->key.code == sf::Mouse::Left) {
+			if (_event->key.code == sf::Mouse::Left){
 				if (sf::Mouse::getPosition(*_window).y <= 800) {
 					if (sf::Mouse::getPosition(*_window).x <= 800) {
 						Punkt pozycjaRufyRozstawienie = { sf::Mouse::getPosition(*_window).x / 80, char(sf::Mouse::getPosition(*_window).y / 80 + 'A') };
 						std::cout << pozycjaRufyRozstawienie.x << " " << pozycjaRufyRozstawienie.y << std::endl;
 						std::cout << sf::Mouse::getPosition(*_window).x << "\t" << sf::Mouse::getPosition(*_window).y << std::endl;
-						if (planszaGraczaLudzkiego->sprawdzCzyWolne(statki[indeksAktualnegoStatku].getDlugoscStatku(), pozycjaRufyRozstawienie, statki[indeksAktualnegoStatku].getKierunek(), 0)){
+						if (_planszaGraczaLudzkiego->sprawdzCzyWolne(statki[indeksAktualnegoStatku].getDlugoscStatku(), pozycjaRufyRozstawienie, statki[indeksAktualnegoStatku].getKierunek(), 0)){
 							//przeniesienie aktualnego statku do rozstawionych statk�w
 							rozstawioneStatki.push_back(statki[indeksAktualnegoStatku]);
-							planszaGraczaLudzkiego->ustawStatek(statki[indeksAktualnegoStatku].getDlugoscStatku(), pozycjaRufyRozstawienie, statki[indeksAktualnegoStatku].getKierunek(), 0);
+							_planszaGraczaLudzkiego->ustawStatek(statki[indeksAktualnegoStatku].getDlugoscStatku(), pozycjaRufyRozstawienie, statki[indeksAktualnegoStatku].getKierunek(), 0);
 							//TODO zmiana koloru rozstawionego statku
 							liczbaStatkowDoRozstawienia--;
 							if (liczbaStatkowDoRozstawienia > 0) {
@@ -116,7 +119,7 @@ public:
 
 	void FazaStrzelania(){
 
-		_indexAktualnegoGracza = 0;
+		*_indexAktualnegoGracza = 1;
 	}
 
 	bool FinishedTurn(){

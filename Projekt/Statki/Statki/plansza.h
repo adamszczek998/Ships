@@ -78,7 +78,7 @@ class Plansza : public sf::Drawable { //dziedziczenie po SFMLu
 				}
 				else if (kierunek == wschod) {
 					for (i = 0; i < dlugoscStatku; ++i) {
-						if (pozycjaRufy.x + i > 10) return false;
+						if (pozycjaRufy.x + i > 9) return false;
 						if (TabPlanszaGraczaLudzkiego[(int)pozycjaRufy.y - 'A'][pozycjaRufy.x + i] == 'z') return false;
 						if ((int)pozycjaRufy.y - 'A' - 1 >= 0) if (TabPlanszaGraczaLudzkiego[(int)pozycjaRufy.y - 'A' - 1][pozycjaRufy.x + i] == 'z') return false;//Sprawdzanie czy na polach nad nie ma statku
 						if ((int)pozycjaRufy.y - 'A' + 1 <= 9) if (TabPlanszaGraczaLudzkiego[(int)pozycjaRufy.y - 'A' + 1][pozycjaRufy.x + i] == 'z') return false;//Sprawdzanie czy na polach pod nie ma statku
