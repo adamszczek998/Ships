@@ -52,7 +52,9 @@ public:
 	}
 
 	virtual  void DoTurn() override {
-		FazaRozstawienia();
+		if (fazaGry == STRZELANIE) FazaStrzelania();
+		else if (fazaGry == ROZSTAWIENIE) FazaRozstawienia();
+		//FazaRozstawienia();
 		*_indexAktualnegoGracza = 0;
 		//std::cout <<"#"<< _indexAktualnegoGracza<<"#";
 		return;
@@ -83,9 +85,12 @@ public:
 			}
 			//std::cout << ;
 		}
-		std::cout << "3";
-		
+		//std::cout << "3";
+		fazaGry = STRZELANIE;
 		
 	}
 
+	void FazaStrzelania() {
+		getchar();
+	}
 };

@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "statek.h"
+#include "Statek.h"
 #include <SFML/Graphics.hpp>
 
 class Gracz : public sf::Drawable {

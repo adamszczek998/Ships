@@ -41,7 +41,7 @@ class Plansza : public sf::Drawable { //dziedziczenie po SFMLu
 		
 		//Testowa funkcja wypisująca planszę w konsoli
 		void wypiszPlansze() {
-			//system("cls");
+			system("cls");
 			for (int i = 0; i < 10; ++i) {
 				for (int j = 0; j < 10; ++j) std::cout<<TabPlanszaGraczaLudzkiego[i][j]<<" ";
 				std::cout << "\t";
@@ -54,7 +54,6 @@ class Plansza : public sf::Drawable { //dziedziczenie po SFMLu
 		//Funkcja sprawdzająca czy podane pola są wolne
 		bool sprawdzCzyWolne(short dlugoscStatku, Punkt pozycjaRufy, Kierunek kierunek, bool gracz) {
 			short i;
-			//int* TabPlansza = &TabPlanszaGraczaLudzkiego;
 			if (gracz == 0) {
 				if (kierunek == polnoc) {
 					for (i = 0; i < dlugoscStatku; ++i) {
@@ -96,8 +95,7 @@ class Plansza : public sf::Drawable { //dziedziczenie po SFMLu
 					if (pozycjaRufy.x - (dlugoscStatku - 1) - 1 >= 0) if (TabPlanszaGraczaLudzkiego[(int)pozycjaRufy.y - 'A'][pozycjaRufy.x - (dlugoscStatku - 1) - 1] == 'z') return false;//Sprawdzanie czy pozycja po lewej nie jest zajęta przez inny statek
 					if (pozycjaRufy.x + 1 <= 9) if (TabPlanszaGraczaLudzkiego[(int)pozycjaRufy.y - 'A'][pozycjaRufy.x + 1] == 'z') return false;//Sprawdzanie czy pozycja po prawej nie jest zajęta przez inny statek
 				}
-				//std::cout << "\nWolne\n";
-				//wypiszPlansze();
+			
 				return true;
 			}
 			else {
@@ -141,8 +139,7 @@ class Plansza : public sf::Drawable { //dziedziczenie po SFMLu
 					if (pozycjaRufy.x - (dlugoscStatku - 1) - 1 >= 0) if (TabPlanszaGraczaKomputerowego[(int)pozycjaRufy.y - 'A'][pozycjaRufy.x - (dlugoscStatku - 1) - 1] == 'z') return false;//Sprawdzanie czy pozycja po lewej nie jest zajęta przez inny statek
 					if (pozycjaRufy.x + 1 <= 9) if (TabPlanszaGraczaKomputerowego[(int)pozycjaRufy.y - 'A'][pozycjaRufy.x + 1] == 'z') return false;//Sprawdzanie czy pozycja po prawej nie jest zajęta przez inny statek
 				}
-				//std::cout << "\nWolne\n";
-				//wypiszPlansze();
+				
 				return true;
 			}
 		}

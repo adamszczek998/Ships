@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include <SFML/Graphics.hpp>
-#include "plansza.h"
+#include "Plansza.h"
 
 class Statek : public sf::Drawable {
 	private:
@@ -13,14 +13,13 @@ class Statek : public sf::Drawable {
 		Plansza* _planszaGraczaLudzkiego = nullptr;
 
 		sf::RectangleShape rufa;
-		//std::vector<sf::RectangleShape> kadlub; //@
 		sf::RectangleShape kadlub[3];
 		sf::RectangleShape dziob;
 
-		//render element�w statku
+		//render elementow statku
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
 			target.draw(rufa);
-			for (int i = 0; i < dlugoscStatku-2; ++i) {//@
+			for (int i = 0; i < dlugoscStatku-2; ++i) {
 				target.draw(kadlub[i]);
 			}
 			target.draw(dziob);
@@ -66,7 +65,7 @@ class Statek : public sf::Drawable {
 
 //GETERY==============================================================================================================================================================	
 
-		//pobiera d�ugo�� statku
+		//pobiera dlugosc statku
 		int getDlugoscStatku() const {
 			return dlugoscStatku;
 		}
@@ -80,7 +79,7 @@ class Statek : public sf::Drawable {
 
 //METODY==============================================================================================================================================================
 
-		//przelicza pozycj� statku na px pod render
+		//przelicza pozycje statku na px pod render
 		void renderStatku(short dlugoscStatku, Kierunek kierunek) {
 			short i;
 			if (kierunek == polnoc) {
