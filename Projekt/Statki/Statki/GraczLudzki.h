@@ -1,7 +1,7 @@
 #pragma once
 #include "Gracz.h"
 
-enum FazaGry { ROZSTAWIENIE, STRZELANIE };
+enum FazaGry { ROZSTAWIENIE, STRZELANIE, KONIEC };
 
 class GraczLudzki : public Gracz {
 	friend class GraczKomputerowy;
@@ -13,6 +13,9 @@ class GraczLudzki : public Gracz {
 	FazaGry fazaGry;
 	bool finishedTurn = false;
 	int liczbaStatkowDoRozstawienia;
+	int HPGraczaKomputerowego;
+
+	std::vector<Statek> rozstawioneStatki;
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
 		
 		target.draw(*_planszaGraczaLudzkiego);
@@ -25,6 +28,8 @@ class GraczLudzki : public Gracz {
 	}
 public:
 //KONSTRUKTORY=============================================================================================
+	//GraczLudzki() {}
+
 	GraczLudzki(const sf::Event* event, const sf::Window* window, int* indexAktualnegoGracza, Plansza* planszaGraczaLudzkiego, Plansza* planszaGraczaKomputerowego) {
 		_indexAktualnegoGracza = indexAktualnegoGracza;
 		_event = event;		
@@ -46,10 +51,17 @@ public:
 		indeksAktualnegoStatku = 0;
 		//tu sie bedzie dzialo cale dodawanie statkow??
 		liczbaStatkowDoRozstawienia = statki.size();
+
+		for (int i = 0; i < liczbaStatkowDoRozstawienia; ++i) {
+			HPGraczaKomputerowego += statki[i].getDlugoscStatku();
+		}
+
 		kwadratKursora.setSize({ 80, 80 });
 		kwadratKursora.setPosition({ 0, 0 });
 		kwadratKursora.setFillColor(sf::Color::White);
 		fazaGry = ROZSTAWIENIE;
+
+
 	}
 
 //DESTRUKTORY==============================================================================================
@@ -58,6 +70,12 @@ public:
 		//delete _planszaGraczaKomputerowego;
 	}
 	
+//GETERY==============================================================================================
+
+	/*std::vector<Statek>* getrozstawioneStatki() {
+		return &rozstawioneStatki;
+	}*/
+
 	//Obsluga faz gry
 	virtual  void DoTurn() override { 
 		if (fazaGry == STRZELANIE) FazaStrzelania(); 
@@ -95,8 +113,8 @@ public:
 				if (sf::Mouse::getPosition(*_window).y <= 800) {
 					if (sf::Mouse::getPosition(*_window).x <= 800) {
 						Punkt pozycjaRufyRozstawienie = { sf::Mouse::getPosition(*_window).x / 80, char(sf::Mouse::getPosition(*_window).y / 80 + 'A') };
-						std::cout << pozycjaRufyRozstawienie.x << " " << pozycjaRufyRozstawienie.y << std::endl;
-						std::cout << sf::Mouse::getPosition(*_window).x << "\t" << sf::Mouse::getPosition(*_window).y << std::endl;
+						//std::cout << pozycjaRufyRozstawienie.x << " " << pozycjaRufyRozstawienie.y << std::endl;
+						//std::cout << sf::Mouse::getPosition(*_window).x << "\t" << sf::Mouse::getPosition(*_window).y << std::endl;
 						if (_planszaGraczaLudzkiego->sprawdzCzyWolne(statki[indeksAktualnegoStatku].getDlugoscStatku(), pozycjaRufyRozstawienie, statki[indeksAktualnegoStatku].getKierunek(), 0)){
 							//przeniesienie aktualnego statku do rozstawionych statk�w
 							rozstawioneStatki.push_back(statki[indeksAktualnegoStatku]);
@@ -118,11 +136,8 @@ public:
 	}
 
 	void FazaStrzelania(){
-
+		//std::cout << "Gracz\n";
 		*_indexAktualnegoGracza = 1;
 	}
 
-	bool FinishedTurn(){
-
-	}
 };

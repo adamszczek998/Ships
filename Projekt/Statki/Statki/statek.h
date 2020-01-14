@@ -20,9 +20,13 @@ class Statek : public sf::Drawable {
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
 			target.draw(rufa);
 			for (int i = 0; i < dlugoscStatku-2; ++i) {
-				target.draw(kadlub[i]);
+				if (kierunek != wschod && kierunek != poludnie) target.draw(kadlub[i]);
+				else if (kierunek == 1 && pozycjaRufy.x + i + 1 <= 9) target.draw(kadlub[i]);
+				else if (kierunek == 2 && int(pozycjaRufy.y) - 'A' + i + 1 <= 9) target.draw(kadlub[i]);
 			}
-			target.draw(dziob);
+			if (kierunek != wschod && kierunek != poludnie) target.draw(dziob);
+			else if (kierunek == 1 && pozycjaRufy.x + dlugoscStatku - 1 <= 9) target.draw(dziob);
+			else if (kierunek == 2 && int(pozycjaRufy.y) - 'A' + dlugoscStatku - 1 <= 9) target.draw(dziob);
 		}
 
 	public:

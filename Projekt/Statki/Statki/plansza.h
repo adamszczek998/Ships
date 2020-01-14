@@ -10,17 +10,24 @@ struct Punkt {
 enum Kierunek { polnoc = 0, wschod = 1, poludnie = 2, zachod = 3 };//przenieść do klasy. Obecnie warningi
 
 class Plansza : public sf::Drawable { //dziedziczenie po SFMLu
+	//friend class Statek;
 	private:
 		sf::RectangleShape plansza;
 		sf::Color kolorPlansza;
 		char TabPlanszaGraczaLudzkiego[10][10] = {};//p-pusty, z-zajety, s-strzelany
 		char TabPlanszaGraczaKomputerowego[10][10] = {};//p-pusty, z-zajety, s-strzelany
-
+		/*std::vector<Statek>* rozstawioneStatki;
+		std::vector<Statek> UpdateState(std::vector<Statek>* _rozstawioneStatki) {
+			rozstawioneStatki = _rozstawioneStatki;
+		}*/
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
 			target.draw(plansza);
+			//for (int i = 0; i < rozstawioneStatki->size(); i++) {
+			//	target.draw(((*rozstawioneStatki)[i]));
+			//}
 		}
-		
 	public:
+	
 //KONSTRUKTORY==============================================================================================================================================================
 		
 		//Zainicjowanie planszy i ustawienie wszystkich pól jako pustych
@@ -144,7 +151,7 @@ class Plansza : public sf::Drawable { //dziedziczenie po SFMLu
 			}
 		}
 
-		//Funkcja ustawiająca statek
+		//Funkcja ustawiająca statek 0-gracz, 1-komputer
 		void ustawStatek(short dlugoscStatku, Punkt pozycjaRufy, Kierunek kierunek, bool gracz) {
 			short i;
 			if (gracz == 0) {
@@ -194,5 +201,20 @@ class Plansza : public sf::Drawable { //dziedziczenie po SFMLu
 				wypiszPlansze();
 			}
 		}
+
+		char sprawdzStatus(Punkt pozycjaMyszy, bool gracz) {
+			if (gracz==0) return TabPlanszaGraczaLudzkiego[(int)pozycjaMyszy.y - 'A'][pozycjaMyszy.x];
+			else return TabPlanszaGraczaKomputerowego[(int)pozycjaMyszy.y - 'A'][pozycjaMyszy.x];
+		}
+
+		void zmienStatus(Punkt pozycjaMyszy, bool gracz) {
+			if (gracz == 0)  TabPlanszaGraczaLudzkiego[(int)pozycjaMyszy.y - 'A'][pozycjaMyszy.x] = 's';
+			else  TabPlanszaGraczaKomputerowego[(int)pozycjaMyszy.y - 'A'][pozycjaMyszy.x] = 's';
+			wypiszPlansze();
+			//std::cout << "QWE";
+			//getchar();
+		}
+
+
 
 };
