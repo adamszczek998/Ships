@@ -10,7 +10,6 @@ class GraczKomputerowy : public Gracz {
 	Plansza* _planszaGraczaKomputerowego;
 	sf::RectangleShape kwadratKursora;
 	FazaGry fazaGry;
-	//bool finishedTurn = false;
 	int liczbaStatkowDoRozstawienia;
 	int HPGraczaLudzkiego;
 	Punkt pozycja;
@@ -21,36 +20,32 @@ class GraczKomputerowy : public Gracz {
 	bool poludnieB;
 	bool zachodB;
 	std::vector<sf::CircleShape>* _trafionePola;
-
-
-	//GraczLudzki _graczLudzki;//
+	std::vector<Statek>* _rozstawioneStatki;
 	
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
 		
 		target.draw(*_planszaGraczaLudzkiego);//
 		target.draw(*_planszaGraczaKomputerowego);//
+		for (int i = 0; i < _rozstawioneStatki->size(); i++) {
+			target.draw((*_rozstawioneStatki)[i]);
+		}
 		for (int i = 0; i < _trafionePola->size(); ++i) {
 			target.draw((*_trafionePola)[i]);
 		}
-		/*for (int i = 0; i < _graczLudzki.rozstawioneStatki.size(); i++) {
-			target.draw(_graczLudzki.rozstawioneStatki[i]);
-			std::cout << i;
-		}*/
+
 		
-		//target.draw(kwadratKursora);
-		//target.draw(rozstawioneStatki[indeksAktualnegoStatku]);
 	}
 public:
 //KONSTRUKTORY=============================================================================================
 
-	GraczKomputerowy(const sf::Event* event, const sf::Window* window, int* indexAktualnegoGracza, Plansza* planszaGraczaLudzkiego, Plansza* planszaGraczaKomputerowego, std::vector<sf::CircleShape>* trafionePola) : stanAI(1), polnocB(0), wschodB(0), poludnieB(0), zachodB(0) {
+	GraczKomputerowy(const sf::Event* event, const sf::Window* window, int* indexAktualnegoGracza, Plansza* planszaGraczaLudzkiego, Plansza* planszaGraczaKomputerowego, std::vector<sf::CircleShape>* trafionePola, std::vector<Statek>* rozstawioneStatki) : stanAI(1), polnocB(0), wschodB(0), poludnieB(0), zachodB(0) {
 		_indexAktualnegoGracza = indexAktualnegoGracza;
 		_event = event;//
 		_window = window;//
 		_planszaGraczaLudzkiego = planszaGraczaLudzkiego;
 		_planszaGraczaKomputerowego = planszaGraczaKomputerowego;
 		_trafionePola = trafionePola;
-		
+		_rozstawioneStatki = rozstawioneStatki;
 		//planszaGraczaLudzkiego = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(0.f, 0.f), sf::Color(15, 101, 176));
 		//planszaGraczaKomputerowego = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(820.f, 0.f), sf::Color(13, 73, 127));
 
@@ -126,7 +121,7 @@ public:
 		try{
 			switch (stanAI) {
 			case 1://losowy ostrzal
-				//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+				
 				polnocB = 0;
 				wschodB = 0;
 				poludnieB = 0;
@@ -142,8 +137,9 @@ public:
 					stanAI = 2;
 					Trafienie();
 				}
+				else Pudlo();
 
-				_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
+				//_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
 				break;
 
 			case 2://trafiono i szuka wektor
@@ -163,10 +159,15 @@ public:
 								--pozycja.y;
 								stanAI = 3;//znaleziony wektor
 								std::cout <<"stanAI: "<< stanAI << "\t";
-								_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
+								//_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
 								Trafienie();
 							}
-							else polnocB = 1;//spalony kierunek
+							else {
+								polnocB = 1;//spalony kierunek
+								--pozycja.y;
+								Pudlo();
+								++pozycja.y;
+							}
 							break;
 						}
 						else polnocB = 1;
@@ -177,10 +178,15 @@ public:
 							if (_planszaGraczaLudzkiego->sprawdzStatus({ pozycja.x + 1, pozycja.y }, 0) == 'z') {
 								++pozycja.x;
 								stanAI = 4;
-								_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
+								//_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
 								Trafienie();
 							}
-							else wschodB = 1;
+							else {
+								wschodB = 1;
+								++pozycja.x;
+								Pudlo();
+								--pozycja.x;
+							}
 							break;
 						}
 						else wschodB = 1;
@@ -191,10 +197,15 @@ public:
 							if (_planszaGraczaLudzkiego->sprawdzStatus({ pozycja.x, pozycja.y + 1 }, 0) == 'z') {
 								++pozycja.y;
 								stanAI = 5;
-								_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
+								//_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
 								Trafienie();
 							}
-							else poludnieB = 1;
+							else {
+								poludnieB = 1;
+								++pozycja.y;
+								Pudlo();
+								--pozycja.y;
+							}
 							break;
 						}
 						else poludnieB = 1;
@@ -205,10 +216,15 @@ public:
 							if (_planszaGraczaLudzkiego->sprawdzStatus({ pozycja.x - 1, pozycja.y }, 0) == 'z') {
 								--pozycja.x;
 								stanAI = 6;
-								_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
+								//_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
 								Trafienie();
 							}
-							else zachodB = 1;
+							else {
+								zachodB = 1;
+								--pozycja.x;
+								Pudlo();
+								++pozycja.x;
+							}
 							break;
 						}
 						else zachodB = 1;
@@ -235,17 +251,19 @@ public:
 				}
 				if (_planszaGraczaLudzkiego->sprawdzStatus(pozycja, 0) == 'z') {
 					Trafienie();
-					_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
+					//_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
 				}
 				else if (poludnieB == 0) {
 					stanAI = 5;//poludnie
-					++pozycja.y;
+					Pudlo();
+					//++pozycja.y;
 				}
 				else {
 					/*polnocB = 0;
 					wschodB = 0;
 					poludnieB = 0;
 					zachodB = 0;*/
+					Pudlo();
 					stanAI = 1;
 					break;
 				}
@@ -271,17 +289,19 @@ public:
 				}
 				if (_planszaGraczaLudzkiego->sprawdzStatus(pozycja, 0) == 'z') {
 					Trafienie();
-					_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
+					//_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
 				}
 				else if (zachodB == 0) {
 					stanAI = 6;//zachod
-					--pozycja.x;
+					Pudlo();
+					//--pozycja.x;
 				}
 				else {
 					/*polnocB = 0;
 					wschodB = 0;
 					poludnieB = 0;
 					zachodB = 0;*/
+					Pudlo();
 					stanAI = 1;
 					break;
 				}
@@ -307,17 +327,19 @@ public:
 				}
 				if (_planszaGraczaLudzkiego->sprawdzStatus(pozycja, 0) == 'z') {
 					Trafienie();
-					_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
+					//_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
 				}
 				else if (polnocB == 0) {
 					stanAI = 3;//polnoc
-					--pozycja.y;
+					Pudlo();
+					//--pozycja.y;
 				}
 				else {
 					/*polnocB = 0;
 					wschodB = 0;
 					poludnieB = 0;
 					zachodB = 0;*/
+					Pudlo();
 					stanAI = 1;
 					break;
 				}
@@ -343,17 +365,19 @@ public:
 				}
 				if (_planszaGraczaLudzkiego->sprawdzStatus(pozycja, 0) == 'z') {
 					Trafienie();
-					_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
+					//_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
 				}
 				else if (wschodB == 0) {
 					stanAI = 4;//wschod
-					++pozycja.x;
+					Pudlo();
+					//++pozycja.x;
 				}
 				else {
 					/*polnocB = 0;
 					wschodB = 0;
 					poludnieB = 0;
 					zachodB = 0;*/
+					Pudlo();
 					stanAI = 1;
 					break;
 				}
@@ -374,7 +398,7 @@ public:
 
 		//std::cout << "Komputer\n";
 
-		if (HPGraczaLudzkiego > 0)*_indexAktualnegoGracza = 0;
+		if (HPGraczaLudzkiego > 0) *_indexAktualnegoGracza = 0;
 		else fazaGry=KONIEC;
 	}
 
@@ -384,7 +408,7 @@ public:
 	}
 
 	void Trafienie() {
-		
+		_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
 		sf::CircleShape trafienie(20);
 		trafienie.setPosition({ float(pozycja.x * 80 + 20), float((int(pozycja.y) - 'A') * 80 + 20) });
 		trafienie.setFillColor(sf::Color(171, 52, 39));
@@ -394,6 +418,7 @@ public:
 	}
 
 	void Pudlo() {
+		_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
 		sf::CircleShape trafienie(20);
 		trafienie.setPosition({ float(pozycja.x * 80 + 20), float((int(pozycja.y) - 'A') * 80 + 20) });
 		trafienie.setFillColor(sf::Color(157, 159, 163));
