@@ -14,6 +14,8 @@ class GraczLudzki : public Gracz {
 	bool finishedTurn = false;
 	int liczbaStatkowDoRozstawienia;
 	int HPGraczaKomputerowego;
+	Punkt pozycja;
+	std::vector<sf::CircleShape>* _trafionePola;
 
 	std::vector<Statek> rozstawioneStatki;
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
@@ -30,7 +32,7 @@ public:
 //KONSTRUKTORY=============================================================================================
 	//GraczLudzki() {}
 
-	GraczLudzki(const sf::Event* event, const sf::Window* window, int* indexAktualnegoGracza, Plansza* planszaGraczaLudzkiego, Plansza* planszaGraczaKomputerowego) {
+	GraczLudzki(const sf::Event* event, const sf::Window* window, int* indexAktualnegoGracza, Plansza* planszaGraczaLudzkiego, Plansza* planszaGraczaKomputerowego, std::vector<sf::CircleShape>* trafionePola) {
 		_indexAktualnegoGracza = indexAktualnegoGracza;
 		_event = event;		
 		_window = window;
@@ -38,6 +40,8 @@ public:
 		_planszaGraczaKomputerowego = planszaGraczaKomputerowego;
 		//planszaGraczaLudzkiego = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(0.f, 0.f), sf::Color(15, 101, 176));
 		//planszaGraczaKomputerowego = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(820.f, 0.f), sf::Color(13, 73, 127));
+		_trafionePola = trafionePola;
+
 
 		Statek statek2(2, planszaGraczaLudzkiego);
 		Statek statek3(3, planszaGraczaLudzkiego);
@@ -138,6 +142,15 @@ public:
 	void FazaStrzelania(){
 		//std::cout << "Gracz\n";
 		*_indexAktualnegoGracza = 1;
+	}
+
+	void Trafienie() {
+		--HPGraczaKomputerowego;
+		sf::CircleShape trafienie(20);
+		trafienie.setPosition({ float(pozycja.x * 80 + 820), float((int(pozycja.y) - 'A') * 80 + 20) });
+		trafienie.setFillColor(sf::Color(171, 52, 39));
+		_trafionePola->push_back(trafienie);
+		std::cout << "\n" << pozycja.x << pozycja.y << "\n";
 	}
 
 };

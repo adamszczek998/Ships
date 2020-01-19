@@ -19,6 +19,8 @@ public:
 
 	//std::unique_ptr<Plansza> planszaGraczaLudzkiego
 
+	std::vector<sf::CircleShape> trafionePola;
+
 	Gracz* gracze[2];
 	Gracz* aktualnyGracz = gracze[indexAktualnegoGracza];
 
@@ -33,8 +35,8 @@ public:
 		planszaGraczaKomputerowego = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(820.f, 0.f), sf::Color(13, 73, 127));
 
 		window = new sf::RenderWindow(sf::VideoMode(windowSizeX, windowSizeY), "Statki");
-		gracze[0] = new GraczLudzki(&event, window, &indexAktualnegoGracza, /*&**/planszaGraczaLudzkiego, planszaGraczaKomputerowego);
-		gracze[1] = new GraczKomputerowy(&event, window, &indexAktualnegoGracza, /*&**/planszaGraczaLudzkiego, planszaGraczaKomputerowego);
+		gracze[0] = new GraczLudzki(&event, window, &indexAktualnegoGracza, /*&**/planszaGraczaLudzkiego, planszaGraczaKomputerowego, &trafionePola);
+		gracze[1] = new GraczKomputerowy(&event, window, &indexAktualnegoGracza, /*&**/planszaGraczaLudzkiego, planszaGraczaKomputerowego, &trafionePola);
 		
 		aktualnyGracz = gracze[indexAktualnegoGracza];
 	}
