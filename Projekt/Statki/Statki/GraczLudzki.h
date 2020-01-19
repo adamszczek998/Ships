@@ -17,8 +17,9 @@ class GraczLudzki : public Gracz {
 	Punkt pozycjaStrzalu;
 	std::vector<sf::CircleShape>* _trafionePola;
 	std::vector<Statek>* _rozstawioneStatki;
+	sf::Text* _GameInfo;
 
-	//std::vector<Statek> rozstawioneStatki;
+
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
 		
 		target.draw(*_planszaGraczaLudzkiego);
@@ -35,7 +36,7 @@ class GraczLudzki : public Gracz {
 public:
 //KONSTRUKTORY=============================================================================================
 
-	GraczLudzki(const sf::Event* event, const sf::Window* window, int* indexAktualnegoGracza, Plansza* planszaGraczaLudzkiego, Plansza* planszaGraczaKomputerowego, std::vector<sf::CircleShape>* trafionePola, std::vector<Statek>* rozstawioneStatki) {
+	GraczLudzki(const sf::Event* event, const sf::Window* window, int* indexAktualnegoGracza, Plansza* planszaGraczaLudzkiego, Plansza* planszaGraczaKomputerowego, std::vector<sf::CircleShape>* trafionePola, std::vector<Statek>* rozstawioneStatki, sf::Text* GameInfo) {
 		_indexAktualnegoGracza = indexAktualnegoGracza;
 		_event = event;		
 		_window = window;
@@ -45,6 +46,7 @@ public:
 		//planszaGraczaKomputerowego = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(820.f, 0.f), sf::Color(13, 73, 127));
 		_trafionePola = trafionePola;
 		_rozstawioneStatki = rozstawioneStatki;
+		_GameInfo = GameInfo;
 
 		Statek statek2(2, planszaGraczaLudzkiego);
 		Statek statek3(3, planszaGraczaLudzkiego);
@@ -90,6 +92,7 @@ public:
 			*_indexAktualnegoGracza = 1;
 			return; 
 		} 
+		_GameInfo->setString("Ustaw swoje statki");
 		if (_event->type == sf::Event::MouseMoved) {//ruch myszy==========================================================================================================
 			if (sf::Mouse::getPosition(*_window).y < 800) {
 				if (sf::Mouse::getPosition(*_window).x < 800) {
@@ -112,12 +115,14 @@ public:
 				if (statki[indeksAktualnegoStatku].getKierunek() == 3) statki[indeksAktualnegoStatku].setKierunek((Kierunek)0, 0);
 				else statki[indeksAktualnegoStatku].setKierunek(Kierunek(statki[indeksAktualnegoStatku].getKierunek() + 1), 0);
 				//std::cout << "Kierunek: " << aktualnyStatek.getKierunek() << std::endl;
-			}//==========================================================================================================================================================
+			}
+			//==========================================================================================================================================================
 		}
 		else if (_event->type == sf::Event::MouseButtonPressed) {//klikniecie klawisza myszy============================================================================
 			if (_event->key.code == sf::Mouse::Left){
 				if (sf::Mouse::getPosition(*_window).y <= 800) {
 					if (sf::Mouse::getPosition(*_window).x <= 800) {
+						_GameInfo->setString(L" ");
 						Punkt pozycjaRufyRozstawienie = { sf::Mouse::getPosition(*_window).x / 80, char(sf::Mouse::getPosition(*_window).y / 80 + 'A') };
 						//std::cout << pozycjaRufyRozstawienie.x << " " << pozycjaRufyRozstawienie.y << std::endl;
 						//std::cout << sf::Mouse::getPosition(*_window).x << "\t" << sf::Mouse::getPosition(*_window).y << std::endl;
@@ -139,6 +144,7 @@ public:
 				}
 			}
 		}//==============================================================================================================================================================
+		
 	}
 
 	void FazaStrzelania(){
@@ -183,12 +189,13 @@ public:
 
 	void Koniec() {
 		std::cout << "Wygral gracz";
-		std::cin.get();
+		_GameInfo->setString(L"Wrog tonie wraz ze swoimi okretami. Wygrywasz!");
+		//std::cin.get();
 	}
 
 	void Trafienie() {
 		_planszaGraczaLudzkiego->zmienStatus(pozycjaStrzalu, 1);
-		
+		_GameInfo->setString(L"Trafienie!");
 		sf::CircleShape trafienie(20);
 		trafienie.setPosition({ float(pozycjaStrzalu.x * 80 + 840), float((int(pozycjaStrzalu.y) - 'A') * 80 + 20) });
 		trafienie.setFillColor(sf::Color(171, 52, 39));
@@ -198,6 +205,7 @@ public:
 
 	void Pudlo() {
 		_planszaGraczaLudzkiego->zmienStatus(pozycjaStrzalu, 1);
+		_GameInfo->setString(L"Pudlo!");
 		sf::CircleShape trafienie(20);
 		trafienie.setPosition({ float(pozycjaStrzalu.x * 80 + 840), float((int(pozycjaStrzalu.y) - 'A') * 80 + 20) });
 		trafienie.setFillColor(sf::Color(157, 159, 163));

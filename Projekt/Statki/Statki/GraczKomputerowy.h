@@ -21,6 +21,7 @@ class GraczKomputerowy : public Gracz {
 	bool zachodB;
 	std::vector<sf::CircleShape>* _trafionePola;
 	std::vector<Statek>* _rozstawioneStatki;
+	sf::Text* _GameInfo;
 	
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
 		
@@ -38,7 +39,7 @@ class GraczKomputerowy : public Gracz {
 public:
 //KONSTRUKTORY=============================================================================================
 
-	GraczKomputerowy(const sf::Event* event, const sf::Window* window, int* indexAktualnegoGracza, Plansza* planszaGraczaLudzkiego, Plansza* planszaGraczaKomputerowego, std::vector<sf::CircleShape>* trafionePola, std::vector<Statek>* rozstawioneStatki) : stanAI(1), polnocB(0), wschodB(0), poludnieB(0), zachodB(0) {
+	GraczKomputerowy(const sf::Event* event, const sf::Window* window, int* indexAktualnegoGracza, Plansza* planszaGraczaLudzkiego, Plansza* planszaGraczaKomputerowego, std::vector<sf::CircleShape>* trafionePola, std::vector<Statek>* rozstawioneStatki, sf::Text* GameInfo) : stanAI(1), polnocB(0), wschodB(0), poludnieB(0), zachodB(0) {
 		_indexAktualnegoGracza = indexAktualnegoGracza;
 		_event = event;//
 		_window = window;//
@@ -46,6 +47,7 @@ public:
 		_planszaGraczaKomputerowego = planszaGraczaKomputerowego;
 		_trafionePola = trafionePola;
 		_rozstawioneStatki = rozstawioneStatki;
+		_GameInfo = GameInfo;
 		//planszaGraczaLudzkiego = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(0.f, 0.f), sf::Color(15, 101, 176));
 		//planszaGraczaKomputerowego = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(820.f, 0.f), sf::Color(13, 73, 127));
 
@@ -86,18 +88,28 @@ public:
 	}
 
 	void FazaRozstawienia() {
-		statkiKomputera[0].setKierunek(polnoc, 1);
+		/*statkiKomputera[0].setKierunek(polnoc, 1);
 		statkiKomputera[0].setPozycjaRufy({ 0, 'B' }, 1);
 		statkiKomputera[1].setKierunek(poludnie, 1);
 		statkiKomputera[1].setPozycjaRufy({ 7, 'B' }, 1);
 		statkiKomputera[2].setKierunek(wschod, 1);
 		statkiKomputera[2].setPozycjaRufy({ 1, 'E' }, 1);
 		statkiKomputera[3].setKierunek(zachod, 1);
-		statkiKomputera[3].setPozycjaRufy({ 7, 'H' }, 1);
+		statkiKomputera[3].setPozycjaRufy({ 7, 'H' }, 1);*/
+
+
 		//std::cout << "2";
 		indeksAktualnegoStatku = 0;
 		while (indeksAktualnegoStatku < statkiKomputera.size()) {
-			std::cout << indeksAktualnegoStatku << std::endl;
+			//std::cout << indeksAktualnegoStatku << std::endl;
+
+			srand(time(NULL));
+			kierunekCase = std::rand() % 4;
+			pozycja.x = std::rand() % 10;
+			pozycja.y = char(std::rand() % 10 + 'A');
+			statkiKomputera[indeksAktualnegoStatku].setKierunek(Kierunek(kierunekCase), 1);
+			statkiKomputera[indeksAktualnegoStatku].setPozycjaRufy(pozycja, 1);
+
 			if (_planszaGraczaLudzkiego->sprawdzCzyWolne(statkiKomputera[indeksAktualnegoStatku].getDlugoscStatku(), statkiKomputera[indeksAktualnegoStatku].getPozycja(), statkiKomputera[indeksAktualnegoStatku].getKierunek(), 1)) {
 				//przeniesienie aktualnego statku do rozstawionych statkow
 				rozstawioneStatkiKomputera.push_back(statkiKomputera[indeksAktualnegoStatku]);
@@ -404,7 +416,8 @@ public:
 
 	void Koniec() {
 		std::cout << "Wygral komputer";
-		std::cin.get();
+		_GameInfo->setString(L"Zmierzasz na spotkanie z Posejdonem. Przegrywasz.");
+		//std::cin.get();
 	}
 
 	void Trafienie() {
