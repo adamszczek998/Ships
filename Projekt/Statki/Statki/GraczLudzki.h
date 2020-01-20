@@ -153,7 +153,7 @@ public:
 				if (sf::Mouse::getPosition(*_window).x < 800) {
 					Punkt pozycjaMyszy = { (sf::Mouse::getPosition(*_window).x / 80), char((sf::Mouse::getPosition(*_window).y / 80)) };
 					kwadratKursora.setPosition({ (float)pozycjaMyszy.x * 80,(float)pozycjaMyszy.y * 80 });
-					statki[indeksAktualnegoStatku].setPozycjaRufy({ (int)pozycjaMyszy.x, pozycjaMyszy.y + 'A' }, 0);
+					//statki[indeksAktualnegoStatku].setPozycjaRufy({ (int)pozycjaMyszy.x, pozycjaMyszy.y + 'A' }, 0);
 				}
 				else if (sf::Mouse::getPosition(*_window).x > 820) {
 					kwadratKursora.setPosition({ float((sf::Mouse::getPosition(*_window).x / 80) * 80 + 20), float((sf::Mouse::getPosition(*_window).y / 80) * 80) });

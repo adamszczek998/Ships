@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Game">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAIAAAAEABAABAIAAAAAjAAAbYAAABAAAAgAA=</HashCode>
+      <FileName>Game.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gracz">
+    <Position X="2.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEEQAACAAAAAAAAAAAAAAQABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Gracz.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraczKomputerowy">
+    <Position X="5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>IQCACAAGMgAIgBAEAAMAAQIABAAAEAAAAABIAAhQAEg=</HashCode>
+      <FileName>GraczKomputerowy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraczLudzki">
+    <Position X="2.75" Y="3.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>IAAACAAGEoAAABAEEAIAAYIABAAAEAAAAABIAAAAAFg=</HashCode>
+      <FileName>GraczLudzki.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plansza">
+    <Position X="9.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>EAAIARAAAAAAAQEAAAKAAAAAARAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Plansza.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Statek">
+    <Position X="7.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>gAQABAgggABAAAAIAAJAAQCQAAAAAACAAAAABAAEIAA=</HashCode>
+      <FileName>Statek.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
