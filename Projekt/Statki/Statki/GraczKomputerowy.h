@@ -3,15 +3,21 @@
 #include "GraczLudzki.h"
 
 class GraczKomputerowy : public Gracz {
-	friend class GraczLudzki;//
-	const sf::Event* _event;
-	const sf::Window* _window;
+	friend class GraczLudzki;
+	
 	Plansza* _planszaGraczaLudzkiego;
 	Plansza* _planszaGraczaKomputerowego;
+	std::vector<sf::CircleShape>* _trafionePola;
+	std::vector<Statek>* _rozstawioneStatki;
+	sf::Text* _GameInfo;
+	const sf::Event* _event;
+	const sf::Window* _window;
 	sf::RectangleShape kwadratKursora;
+
 	FazaGry fazaGry;
 	int liczbaStatkowDoRozstawienia;
 	int HPGraczaLudzkiego;
+
 	Punkt pozycja;
 	int stanAI;
 	int kierunekCase;
@@ -19,12 +25,9 @@ class GraczKomputerowy : public Gracz {
 	bool wschodB;
 	bool poludnieB;
 	bool zachodB;
-	std::vector<sf::CircleShape>* _trafionePola;
-	std::vector<Statek>* _rozstawioneStatki;
-	sf::Text* _GameInfo;
 	
+	//Metoda rysujaca plansze, statki, trafienia i pudla
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
-		
 		target.draw(*_planszaGraczaLudzkiego);//
 		target.draw(*_planszaGraczaKomputerowego);//
 		for (int i = 0; i < _rozstawioneStatki->size(); i++) {
@@ -33,11 +36,9 @@ class GraczKomputerowy : public Gracz {
 		for (int i = 0; i < _trafionePola->size(); ++i) {
 			target.draw((*_trafionePola)[i]);
 		}
-
-		
 	}
 public:
-//KONSTRUKTORY=============================================================================================
+//KONSTRUKTORY============================================================================
 
 	GraczKomputerowy(const sf::Event* event, const sf::Window* window, int* indexAktualnegoGracza, Plansza* planszaGraczaLudzkiego, Plansza* planszaGraczaKomputerowego, std::vector<sf::CircleShape>* trafionePola, std::vector<Statek>* rozstawioneStatki, sf::Text* GameInfo) : stanAI(1), polnocB(0), wschodB(0), poludnieB(0), zachodB(0) {
 		_indexAktualnegoGracza = indexAktualnegoGracza;
@@ -48,8 +49,6 @@ public:
 		_trafionePola = trafionePola;
 		_rozstawioneStatki = rozstawioneStatki;
 		_GameInfo = GameInfo;
-		//planszaGraczaLudzkiego = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(0.f, 0.f), sf::Color(15, 101, 176));
-		//planszaGraczaKomputerowego = new Plansza(sf::Vector2f(800.f, 800.f), sf::Vector2f(820.f, 0.f), sf::Color(13, 73, 127));
 
 		Statek statek2(2, planszaGraczaLudzkiego);
 		Statek statek3(3, planszaGraczaLudzkiego);
@@ -62,31 +61,33 @@ public:
 		liczbaStatkowDoRozstawienia = statkiKomputera.size();
 		indeksAktualnegoStatku = 0;
 
-		for (int i = 0; i < liczbaStatkowDoRozstawienia; ++i) {
+		for (int i = 0; i < liczbaStatkowDoRozstawienia; ++i) {//obliczenie liczby hp na podstawie dlugosci statkow
 			HPGraczaLudzkiego += statkiKomputera[i].getDlugoscStatku();
 		}
-		
 	}
 
 	
-//DESTRUKTORY=============================================================================================
+//DESTRUKTORY=============================================================================
 
 	~GraczKomputerowy() {
 		
 	}
 
 
-//METODY=============================================================================================
+//METODY==================================================================================
+	
+	//Metoda polimorficzna zarzadzajaca ruchem komputera
 	virtual  void DoTurn() override {
 		if (fazaGry == STRZELANIE) FazaStrzelania();
 		else if (fazaGry == ROZSTAWIENIE) FazaRozstawienia();
 		else Koniec();
-		//FazaRozstawienia();
+
 		*_indexAktualnegoGracza = 0;
-		//std::cout <<"#"<< _indexAktualnegoGracza<<"#";
+		
 		return;
 	}
 
+	//Metoda rozstawiajaca statki w sposob losowy lub narzucony
 	void FazaRozstawienia() {
 		/*statkiKomputera[0].setKierunek(polnoc, 1);
 		statkiKomputera[0].setPozycjaRufy({ 0, 'B' }, 1);
@@ -97,12 +98,9 @@ public:
 		statkiKomputera[3].setKierunek(zachod, 1);
 		statkiKomputera[3].setPozycjaRufy({ 7, 'H' }, 1);*/
 
-
-		//std::cout << "2";
 		indeksAktualnegoStatku = 0;
-		while (indeksAktualnegoStatku < statkiKomputera.size()) {
-			//std::cout << indeksAktualnegoStatku << std::endl;
-
+		while (indeksAktualnegoStatku < statkiKomputera.size()) {//Losowe rozmieszczenie statków komputera
+			
 			srand(time(NULL));
 			kierunekCase = std::rand() % 4;
 			pozycja.x = std::rand() % 10;
@@ -114,19 +112,18 @@ public:
 				//przeniesienie aktualnego statku do rozstawionych statkow
 				rozstawioneStatkiKomputera.push_back(statkiKomputera[indeksAktualnegoStatku]);
 				_planszaGraczaLudzkiego->ustawStatek(statkiKomputera[indeksAktualnegoStatku].getDlugoscStatku(), statkiKomputera[indeksAktualnegoStatku].getPozycja(), statkiKomputera[indeksAktualnegoStatku].getKierunek(), 1);
-
 				liczbaStatkowDoRozstawienia--;
 				if (liczbaStatkowDoRozstawienia >= 0) {
 					++indeksAktualnegoStatku;
 				}
 			}
-			//std::cout << ;
 		}
-		//std::cout << "3";
+
 		fazaGry = STRZELANIE;
 		
 	}
 
+	//Metoda obslugujaca strzelanie
 	void FazaStrzelania() {
 		srand(time(NULL));
 		
@@ -140,7 +137,6 @@ public:
 				zachodB = 0;
 
 				do {//szukanie losowych niestrzelanych punktow
-					
 					pozycja.x = std::rand() % 10;
 					pozycja.y = char(std::rand() % 10 + 'A');
 				} while (_planszaGraczaLudzkiego->sprawdzStatus(pozycja, 0) == 's');
@@ -150,23 +146,19 @@ public:
 					Trafienie();
 				}
 				else Pudlo();
-
-				//_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
-				break;
+			break;
 
 			case 2://trafiono i szuka wektor
 				do {
-					
 					if (polnocB == 1 && poludnieB == 1 && wschodB == 1 && zachodB == 1) {
 						std::string safeBreakMessage = "Nie udalo sie znalezc kierunku w AIswitch: case2, error_code #0001";
 						throw safeBreakMessage;
 					}
 					
-					kierunekCase = std::rand() % 4;
+					kierunekCase = std::rand() % 4;//losuje kierunek strzalu wzgledem trafionego pola
 					std::cout << kierunekCase << "\t";
 					if (kierunekCase == 0 && polnocB == 0) {//sprawdza czy kierunek spalony
 						if ((int(pozycja.y) - 'A' - 1) >= 0) {//sprawdza czy poza plansza
-							//pozycja.y--;//potencjalny error
 							if (_planszaGraczaLudzkiego->sprawdzStatus({ pozycja.x,pozycja.y - 1 }, 0) == 'z') {//sprawdza czy na danym polu jest statek
 								--pozycja.y;
 								stanAI = 3;//znaleziony wektor
@@ -186,11 +178,9 @@ public:
 					}
 					if (kierunekCase == 1 && wschodB == 0) {
 						if((pozycja.x + 1) <= 9){
-							//pozycja.x++;//potencjalny error
 							if (_planszaGraczaLudzkiego->sprawdzStatus({ pozycja.x + 1, pozycja.y }, 0) == 'z') {
 								++pozycja.x;
 								stanAI = 4;
-								//_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
 								Trafienie();
 							}
 							else {
@@ -205,11 +195,9 @@ public:
 					}
 					if (kierunekCase == 2 && poludnieB == 0) {
 						if ((int(pozycja.y) - 'A' + 1) <= 9) {
-							//pozycja.y++;//potencjalny error
 							if (_planszaGraczaLudzkiego->sprawdzStatus({ pozycja.x, pozycja.y + 1 }, 0) == 'z') {
 								++pozycja.y;
 								stanAI = 5;
-								//_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
 								Trafienie();
 							}
 							else {
@@ -224,11 +212,9 @@ public:
 					}
 					if (kierunekCase == 3 && zachodB==0) {
 						if ((pozycja.x - 1) >= 0) {
-							//pozycja.x--;//potencjalny error
 							if (_planszaGraczaLudzkiego->sprawdzStatus({ pozycja.x - 1, pozycja.y }, 0) == 'z') {
 								--pozycja.x;
 								stanAI = 6;
-								//_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
 								Trafienie();
 							}
 							else {
@@ -242,7 +228,7 @@ public:
 						else zachodB = 1;
 					}
 				} while (true);
-				break;
+			break;
 
 			case 3://polnoc
 				while (_planszaGraczaLudzkiego->sprawdzStatus(pozycja, 0) == 's') {//przechodzi przez wszystkie strzelane pola
@@ -250,48 +236,34 @@ public:
 					else {
 						if (poludnieB == 0)stanAI = 5;//poludnie
 						else {
-							/*polnocB = 0;
-							wschodB = 0;
-							poludnieB = 0;
-							zachodB = 0;*/
-							stanAI = 1;
+							stanAI = 1;//sprawdzono kierunek z obu stron, powrot do losowego strzelania
 							break;
 						}
-						polnocB = 1;
+						polnocB = 1;//kierunek sprawdzony
 						break;//koniec planszy
 					}
 				}
 				if (_planszaGraczaLudzkiego->sprawdzStatus(pozycja, 0) == 'z') {
 					Trafienie();
-					//_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
 				}
 				else if (poludnieB == 0) {
 					stanAI = 5;//poludnie
 					Pudlo();
-					//++pozycja.y;
 				}
 				else {
-					/*polnocB = 0;
-					wschodB = 0;
-					poludnieB = 0;
-					zachodB = 0;*/
 					Pudlo();
 					stanAI = 1;
 					break;
 				}
 				polnocB = 1;
-				break;
+			break;
 
 			case 4://wschod
-				while (_planszaGraczaLudzkiego->sprawdzStatus(pozycja, 0) == 's') {//przechodzi przez wszystkie strzelane pola
-					if (pozycja.x + 1 <= 9) ++pozycja.x;//sprawdza czy poza plansza
+				while (_planszaGraczaLudzkiego->sprawdzStatus(pozycja, 0) == 's') {
+					if (pozycja.x + 1 <= 9) ++pozycja.x;
 					else {
 						if (zachodB == 0)stanAI = 6;//poludnie
 						else {
-							/*polnocB = 0;
-							wschodB = 0;
-							poludnieB = 0;
-							zachodB = 0;*/
 							stanAI = 1;
 							break;
 						}
@@ -301,18 +273,12 @@ public:
 				}
 				if (_planszaGraczaLudzkiego->sprawdzStatus(pozycja, 0) == 'z') {
 					Trafienie();
-					//_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
 				}
 				else if (zachodB == 0) {
 					stanAI = 6;//zachod
 					Pudlo();
-					//--pozycja.x;
 				}
 				else {
-					/*polnocB = 0;
-					wschodB = 0;
-					poludnieB = 0;
-					zachodB = 0;*/
 					Pudlo();
 					stanAI = 1;
 					break;
@@ -321,15 +287,11 @@ public:
 				break;
 
 			case 5://poludnie
-				while (_planszaGraczaLudzkiego->sprawdzStatus(pozycja, 0) == 's') {//przechodzi przez wszystkie strzelane pola
-					if ((int)pozycja.y - 'A' + 1 <= 9) ++pozycja.y;//sprawdza czy poza plansza
+				while (_planszaGraczaLudzkiego->sprawdzStatus(pozycja, 0) == 's') {
+					if ((int)pozycja.y - 'A' + 1 <= 9) ++pozycja.y;
 					else {
 						if (polnocB == 0)stanAI = 3;//poludnie
 						else {
-							/*polnocB = 0;
-							wschodB = 0;
-							poludnieB = 0;
-							zachodB = 0;*/
 							stanAI = 1;
 							break;
 						}
@@ -339,18 +301,12 @@ public:
 				}
 				if (_planszaGraczaLudzkiego->sprawdzStatus(pozycja, 0) == 'z') {
 					Trafienie();
-					//_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
 				}
 				else if (polnocB == 0) {
 					stanAI = 3;//polnoc
 					Pudlo();
-					//--pozycja.y;
 				}
 				else {
-					/*polnocB = 0;
-					wschodB = 0;
-					poludnieB = 0;
-					zachodB = 0;*/
 					Pudlo();
 					stanAI = 1;
 					break;
@@ -359,15 +315,11 @@ public:
 				break;
 
 			case 6://zachod
-				while (_planszaGraczaLudzkiego->sprawdzStatus(pozycja, 0) == 's') {//przechodzi przez wszystkie strzelane pola
-					if (pozycja.x - 1 >= 0) --pozycja.x;//sprawdza czy poza plansza
+				while (_planszaGraczaLudzkiego->sprawdzStatus(pozycja, 0) == 's') {
+					if (pozycja.x - 1 >= 0) --pozycja.x;
 					else {
 						if (wschodB == 0)stanAI = 4;//poludnie
 						else {
-							/*polnocB = 0;
-							wschodB = 0;
-							poludnieB = 0;
-							zachodB = 0;*/
 							stanAI = 1;
 							break;
 						}
@@ -377,18 +329,12 @@ public:
 				}
 				if (_planszaGraczaLudzkiego->sprawdzStatus(pozycja, 0) == 'z') {
 					Trafienie();
-					//_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
 				}
 				else if (wschodB == 0) {
 					stanAI = 4;//wschod
 					Pudlo();
-					//++pozycja.x;
 				}
 				else {
-					/*polnocB = 0;
-					wschodB = 0;
-					poludnieB = 0;
-					zachodB = 0;*/
 					Pudlo();
 					stanAI = 1;
 					break;
@@ -408,18 +354,17 @@ public:
 			std::cin.get();
 		}
 
-		//std::cout << "Komputer\n";
-
 		if (HPGraczaLudzkiego > 0) *_indexAktualnegoGracza = 0;
 		else fazaGry=KONIEC;
 	}
 
+	//Metoda wyswietlajaca komunikat o koncu gry
 	void Koniec() {
 		std::cout << "Wygral komputer";
 		_GameInfo->setString(L"Zmierzasz na spotkanie z Posejdonem. Przegrywasz.");
-		//std::cin.get();
 	}
 
+	//Metoda zarzadzajaca trafieniem
 	void Trafienie() {
 		_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
 		sf::CircleShape trafienie(20);
@@ -430,6 +375,7 @@ public:
 		--HPGraczaLudzkiego;
 	}
 
+	//Metoda zarzadzajaca pudlem
 	void Pudlo() {
 		_planszaGraczaLudzkiego->zmienStatus(pozycja, 0);
 		sf::CircleShape trafienie(20);

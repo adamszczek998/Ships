@@ -7,28 +7,23 @@ struct Punkt {
 	char y;
 };
 
-enum Kierunek { polnoc = 0, wschod = 1, poludnie = 2, zachod = 3 };//przenieść do klasy. Obecnie warningi
+enum Kierunek { polnoc = 0, wschod = 1, poludnie = 2, zachod = 3 };
 
-class Plansza : public sf::Drawable { //dziedziczenie po SFMLu
-	//friend class Statek;
+class Plansza : public sf::Drawable { 
 	private:
 		sf::RectangleShape plansza;
 		sf::Color kolorPlansza;
 		char TabPlanszaGraczaLudzkiego[10][10] = {};//p-pusty, z-zajety, s-strzelany
 		char TabPlanszaGraczaKomputerowego[10][10] = {};//p-pusty, z-zajety, s-strzelany
-		/*std::vector<Statek>* rozstawioneStatki;
-		std::vector<Statek> UpdateState(std::vector<Statek>* _rozstawioneStatki) {
-			rozstawioneStatki = _rozstawioneStatki;
-		}*/
+
+		//Metoda rysujaca plansze
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
 			target.draw(plansza);
-			//for (int i = 0; i < rozstawioneStatki->size(); i++) {
-			//	target.draw(((*rozstawioneStatki)[i]));
-			//}
+			
 		}
 	public:
 	
-//KONSTRUKTORY==============================================================================================================================================================
+//KONSTRUKTORY============================================================================
 		
 		//Zainicjowanie planszy i ustawienie wszystkich pól jako pustych
 		Plansza(sf::Vector2f size, sf::Vector2f position, sf::Color kolorPlansza) : kolorPlansza(kolorPlansza) {
@@ -44,7 +39,7 @@ class Plansza : public sf::Drawable { //dziedziczenie po SFMLu
 		}
 
 
-//METODY==============================================================================================================================================================
+//METODY==================================================================================
 		
 		//Testowa funkcja wypisująca planszę w konsoli
 		void wypiszPlansze() {
@@ -57,8 +52,7 @@ class Plansza : public sf::Drawable { //dziedziczenie po SFMLu
 			}
 		}
 		
-		
-		//Funkcja sprawdzająca czy podane pola są wolne
+		//Metoda sprawdzająca czy podane pola są wolne
 		bool sprawdzCzyWolne(short dlugoscStatku, Punkt pozycjaRufy, Kierunek kierunek, bool gracz) {
 			short i;
 			if (gracz == 0) {
@@ -151,28 +145,28 @@ class Plansza : public sf::Drawable { //dziedziczenie po SFMLu
 			}
 		}
 
-		//Funkcja ustawiająca statek 0-gracz, 1-komputer
+		//Metoda ustawiająca statek, 0-gracz, 1-komputer
 		void ustawStatek(short dlugoscStatku, Punkt pozycjaRufy, Kierunek kierunek, bool gracz) {
 			short i;
 			if (gracz == 0) {
 				if (kierunek == polnoc) {
 					for (i = 0; i < dlugoscStatku; ++i) {
-						TabPlanszaGraczaLudzkiego[(int)pozycjaRufy.y - 'A' - i][pozycjaRufy.x] = 'z';
+						TabPlanszaGraczaLudzkiego[(int)pozycjaRufy.y - 'A' - i][pozycjaRufy.x] = 'z';//zmiana statusu pola na zajete
 					}
 				}
-				else if (kierunek == wschod) {//wschod
+				else if (kierunek == wschod) {
 					for (i = 0; i < dlugoscStatku; ++i) {
 						TabPlanszaGraczaLudzkiego[(int)pozycjaRufy.y - 'A'][pozycjaRufy.x + i] = 'z';
 					}
 				}
-				else if (kierunek == poludnie) {//poludnie
+				else if (kierunek == poludnie) {
 					for (i = 0; i < dlugoscStatku; ++i) {
 						TabPlanszaGraczaLudzkiego[(int)pozycjaRufy.y - 'A' + i][pozycjaRufy.x] = 'z';
 					}
 				}
 				else {//zachod
 					for (i = 0; i < dlugoscStatku; ++i) {
-						TabPlanszaGraczaLudzkiego[(int)pozycjaRufy.y - 'A'][pozycjaRufy.x - i] = 'z';//zmiana statusu pola na zajete
+						TabPlanszaGraczaLudzkiego[(int)pozycjaRufy.y - 'A'][pozycjaRufy.x - i] = 'z';
 					}
 				}
 				wypiszPlansze();
@@ -183,38 +177,35 @@ class Plansza : public sf::Drawable { //dziedziczenie po SFMLu
 						TabPlanszaGraczaKomputerowego[(int)pozycjaRufy.y - 'A' - i][pozycjaRufy.x] = 'z';
 					}
 				}
-				else if (kierunek == wschod) {//wschod
+				else if (kierunek == wschod) {
 					for (i = 0; i < dlugoscStatku; ++i) {
 						TabPlanszaGraczaKomputerowego[(int)pozycjaRufy.y - 'A'][pozycjaRufy.x + i] = 'z';
 					}
 				}
-				else if (kierunek == poludnie) {//poludnie
+				else if (kierunek == poludnie) {
 					for (i = 0; i < dlugoscStatku; ++i) {
 						TabPlanszaGraczaKomputerowego[(int)pozycjaRufy.y - 'A' + i][pozycjaRufy.x] = 'z';
 					}
 				}
 				else {//zachod
 					for (i = 0; i < dlugoscStatku; ++i) {
-						TabPlanszaGraczaKomputerowego[(int)pozycjaRufy.y - 'A'][pozycjaRufy.x - i] = 'z';//zmiana statusu pola na zajete
+						TabPlanszaGraczaKomputerowego[(int)pozycjaRufy.y - 'A'][pozycjaRufy.x - i] = 'z';
 					}
 				}
 				wypiszPlansze();
 			}
 		}
 
+		//Metoda sprawdzajaca status pola
 		char sprawdzStatus(Punkt pozycjaMyszy, bool gracz) {
 			if (gracz==0) return TabPlanszaGraczaLudzkiego[(int)pozycjaMyszy.y - 'A'][pozycjaMyszy.x];
 			else return TabPlanszaGraczaKomputerowego[(int)pozycjaMyszy.y - 'A'][pozycjaMyszy.x];
 		}
 
+		//Metoda zmieniajaca status pola
 		void zmienStatus(Punkt pozycjaMyszy, bool gracz) {
 			if (gracz == 0)  TabPlanszaGraczaLudzkiego[(int)pozycjaMyszy.y - 'A'][pozycjaMyszy.x] = 's';
 			else  TabPlanszaGraczaKomputerowego[(int)pozycjaMyszy.y - 'A'][pozycjaMyszy.x] = 's';
 			wypiszPlansze();
-			//std::cout << "QWE";
-			//getchar();
 		}
-
-
-
 };

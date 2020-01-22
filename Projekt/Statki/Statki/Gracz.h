@@ -12,6 +12,7 @@ protected:
 	std::vector<Statek> rozstawioneStatkiKomputera;
 
 public:
+	//Metoda czystowirtualna
 	virtual void DoTurn() = 0;
 
 };

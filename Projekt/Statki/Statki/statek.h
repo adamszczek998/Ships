@@ -16,7 +16,7 @@ class Statek : public sf::Drawable {
 		sf::RectangleShape kadlub[3];
 		sf::RectangleShape dziob;
 
-		//render elementow statku
+		//Metoda rysujaca elementy statku
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
 			target.draw(rufa);
 			for (int i = 0; i < dlugoscStatku-2; ++i) {
@@ -30,8 +30,8 @@ class Statek : public sf::Drawable {
 		}
 
 	public:
-//KONSTRUKTORY==============================================================================================================================================================
-		//ustawia dlugosc statku
+//KONSTRUKTORY============================================================================
+
 		Statek() : dlugoscStatku(3) {}
 		
 		//ustawia parametry graficzne statku
@@ -43,7 +43,6 @@ class Statek : public sf::Drawable {
 				sf::RectangleShape nowyKadlub;
 				nowyKadlub.setSize({ 80, 80 });
 				nowyKadlub.setFillColor(sf::Color::White);
-				//kadlub.push_back(nowyKadlub);@
 				kadlub[i - 2] = nowyKadlub;
 			}
 
@@ -52,7 +51,7 @@ class Statek : public sf::Drawable {
 
 			setPozycjaRufy({ 4, 'E'}, 0);
 		}
-//SETERY==============================================================================================================================================================	
+//SETERY==================================================================================
 
 		//ustawia pozycje rufy na planszy
 		void setPozycjaRufy(Punkt pozycja, bool gracz) {
@@ -67,21 +66,24 @@ class Statek : public sf::Drawable {
 		}
 
 
-//GETERY==============================================================================================================================================================	
+//GETERY=================================================================================
 
 		//pobiera dlugosc statku
 		int getDlugoscStatku() const {
 			return dlugoscStatku;
 		}
+
 		//pobiera kierunek statku
 		Kierunek getKierunek() const {
 			return kierunek;
 		}
+
+		//pobiera pozycje statku
 		Punkt getPozycja() const {
 			return pozycjaRufy;
 		}
 
-//METODY==============================================================================================================================================================
+//METODY==================================================================================
 
 		//przelicza pozycje statku na px pod render
 		void renderStatku(short dlugoscStatku, Kierunek kierunek) {
