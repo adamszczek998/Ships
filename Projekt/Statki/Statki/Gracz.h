@@ -9,9 +9,6 @@ protected:
 	std::vector<Statek> statkiKomputera;
 	int indeksAktualnegoStatku = 0;
 	int* _indexAktualnegoGracza = nullptr;
-	//Plansza* planszaGraczaLudzkiego = nullptr;
-	//Plansza* planszaGraczaKomputerowego = nullptr;
-	//std::vector<Statek> rozstawioneStatki;
 	std::vector<Statek> rozstawioneStatkiKomputera;
 
 public:
