@@ -19,8 +19,9 @@ class GraczKomputerowy : public Gracz {
 	int HPGraczaLudzkiego;
 
 	Punkt pozycja;
-	int stanAI;
-	int kierunekCase;
+	short stanAI;//zmienna przechowujaca nr stanu AI
+	short kierunekCase;//zmienna przechowujaca wylosowany przez AI kierunek
+	//zmienne informujace czy dany kierunek zostal juz sprawdzony
 	bool polnocB;
 	bool wschodB;
 	bool poludnieB;

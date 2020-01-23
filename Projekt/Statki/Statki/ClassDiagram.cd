@@ -15,7 +15,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="GraczKomputerowy">
-    <Position X="5" Y="0.5" Width="2" />
+    <Position X="5.5" Y="0.5" Width="2" />
     <TypeIdentifier>
       <HashCode>IQCACAAGMgAIgBAEAAMAAQIABAAAEAAAAABIAAhQAEg=</HashCode>
       <FileName>GraczKomputerowy.h</FileName>
@@ -29,14 +29,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Plansza">
-    <Position X="9.5" Y="0.5" Width="2" />
+    <Position X="10" Y="0.5" Width="2" />
     <TypeIdentifier>
       <HashCode>EAAIARAAAAAAAQEAAAKAAAAAARAAAACAAAAAAAAAAAA=</HashCode>
       <FileName>Plansza.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Statek">
-    <Position X="7.25" Y="0.5" Width="2" />
+    <Position X="7.75" Y="0.5" Width="2" />
     <TypeIdentifier>
       <HashCode>gAQABAgggABAAAAIAAJAAQCQAAAAAACAAAAABAAEIAA=</HashCode>
       <FileName>Statek.h</FileName>
