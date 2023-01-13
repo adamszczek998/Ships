@@ -1,6 +1,0 @@
-LINIA 8
-04:01 Rynek
-04:12 Damrota
-05:13 Rynek
-04:24 Damrota
-LINIA 84507:00 Andrzeja07:23 Rynek07:30 Dworzec
